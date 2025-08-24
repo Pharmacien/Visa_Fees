@@ -2,11 +2,6 @@
 
 import * as React from "react";
 import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
-import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
@@ -53,14 +48,12 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
 import { Application } from "@/lib/schema";
 import { deleteApplication } from "@/app/actions";
 import { ApplicationForm } from "./application-form";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import { ChevronDown, ChevronsUpDown, MoreHorizontal, FileText, Pencil, Trash2, Copy } from "lucide-react";
+import { ChevronsUpDown, MoreHorizontal, FileText, Pencil, Trash2, Copy } from "lucide-react";
 import { toZonedTime } from "date-fns-tz";
 
 
@@ -131,7 +124,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
     {
       accessorKey: "address",
       header: "Address",
-      cell: ({ row }) => <div>{row.getValue("address")}</div>,
+      cell: ({ row }) => <div className="truncate max-w-xs">{row.getValue("address")}</div>,
     },
     {
       accessorKey: "applicationDate",
@@ -210,7 +203,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
                 Edit
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                className="text-destructive focus:text-destructive focus:bg-destructive/10"
                 onClick={() => setItemToDelete(application)}
               >
                 <Trash2 className="mr-2 h-4 w-4" />

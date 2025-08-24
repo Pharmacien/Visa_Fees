@@ -1,7 +1,6 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
-import { Sidebar, SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { Header } from '@/components/header';
 
 export const metadata: Metadata = {
@@ -23,12 +22,8 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"></link>
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
-        <SidebarProvider>
-            <Header/>
-            <SidebarInset>
-              {children}
-            </SidebarInset>
-        </SidebarProvider>
+        <Header/>
+        <main>{children}</main>
         <Toaster />
       </body>
     </html>
