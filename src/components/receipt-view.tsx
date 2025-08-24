@@ -83,25 +83,6 @@ export function ReceiptView({ application }: { application: Application }) {
           </Card>
           
           <div ref={receiptRef} className="bg-white p-[1in] shadow-lg rounded-sm text-black A4-format font-sans print:shadow-none print:rounded-none">
-            {/* Header */}
-            <header className="text-center mb-8 relative">
-              <div className="absolute top-0 right-0 text-left">
-                  <h2 className="font-bold">Receipt</h2>
-                  <p className="mt-1">No. <span className="font-normal underline">{receiptNumber}</span></p>
-                  <p className="mt-1">Date: <span className="font-normal underline">{generatedDate ? format(generatedDate, 'dd.MM.yyyy') : '__________'}</span></p>
-              </div>
-               <div className="flex justify-center mb-2">
-                   <Image 
-                      src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Seal_of_Algeria.svg"
-                      alt="Seal of Algeria"
-                      width={80}
-                      height={80}
-                      data-ai-hint="algeria seal"
-                  />
-              </div>
-              <p className="font-semibold">People's Democratic Republic of Algeria</p>
-            </header>
-
             {/* Title */}
             <section className="text-center my-10">
               <h1 className="text-2xl font-bold underline tracking-wider">Payment Receipt</h1>
@@ -144,17 +125,6 @@ export function ReceiptView({ application }: { application: Application }) {
                   </tbody>
               </table>
             </section>
-            
-            
-            {/* Footer */}
-            <footer className="mt-24">
-              <div className="flex justify-end">
-                  <div className="text-left">
-                      <p>Stamp and Signature:</p>
-                      <p className="mt-16">________________________________</p>
-                  </div>
-              </div>
-            </footer>
           </div>
         </div>
       </div>
