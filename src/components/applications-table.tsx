@@ -59,6 +59,7 @@ import { Application } from "@/lib/schema";
 import { deleteApplication } from "@/app/actions";
 import { ApplicationForm } from "./application-form";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
+import { ChevronDown, ChevronsUpDown, MoreHorizontal } from "lucide-react";
 
 export function ApplicationsTable({ data }: { data: Application[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -114,7 +115,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Full Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
       cell: ({ row }) => <div>{row.getValue("fullName")}</div>,
@@ -132,7 +133,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Application Date
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
       cell: ({ row }) => (
@@ -150,7 +151,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Amount Paid
-            <CaretSortIcon className="ml-2 h-4 w-4" />
+            <ChevronsUpDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
       ),
@@ -173,7 +174,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
+                <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

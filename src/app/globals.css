@@ -58,18 +58,6 @@
   }
 }
 
-@layer utilities {
-  .font-headline {
-    @apply font-headline;
-  }
-  .font-body {
-    @apply font-body;
-  }
-  .font-code {
-    @apply font-code;
-  }
-}
-
 @media print {
   .no-print {
     display: none !important;
