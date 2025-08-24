@@ -5,7 +5,7 @@ import { z } from "zod";
 import { ApplicationSchema, type Application } from "@/lib/schema";
 import { validateApplicationData } from "@/ai/flows/validate-application-data";
 import { format, parseISO, startOfDay } from "date-fns";
-import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 
 // In-memory store for demonstration purposes
 let applications: Application[] = [
@@ -69,7 +69,7 @@ export async function createApplication(data: unknown) {
   const newApplication: Application = {
     id: `app-${Date.now()}`,
     ...parsed.data,
-    applicationDate: zonedTimeToUtc(startOfDay(parsed.data.applicationDate), 'UTC'),
+    applicationDate: toZonedTime(startOfDay(parsed.data.applicationDate), 'UTC'),
   };
 
   applications.unshift(newApplication);
@@ -94,7 +94,7 @@ export async function updateApplication(data: unknown) {
   applications[index] = { 
     ...applications[index], 
     ...updatedData,
-    applicationDate: zonedTimeToUtc(startOfDay(updatedData.applicationDate), 'UTC'),
+    applicationDate: toZonedTime(startOfDay(updatedData.applicationDate), 'UTC'),
   };
   revalidatePath("/");
   revalidatePath(`/receipt/${id}`);

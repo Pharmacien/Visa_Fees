@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
-import { utcToZonedTime } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 
 import { cn } from "@/lib/utils";
 import { ApplicationSchema, type Application } from "@/lib/schema";
@@ -43,7 +43,7 @@ export function ApplicationForm({ application, onSuccess }: ApplicationFormProps
     defaultValues: isEditMode
       ? { 
           ...application, 
-          applicationDate: utcToZonedTime(new Date(application.applicationDate), 'UTC') 
+          applicationDate: toZonedTime(new Date(application.applicationDate), 'UTC') 
         }
       : {
           fullName: "",

@@ -61,7 +61,7 @@ import { deleteApplication } from "@/app/actions";
 import { ApplicationForm } from "./application-form";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { ChevronDown, ChevronsUpDown, MoreHorizontal } from "lucide-react";
-import { utcToZonedTime } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 
 
 export function ApplicationsTable({ data }: { data: Application[] }) {
@@ -142,7 +142,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
       cell: ({ row }) => {
         const dateValue = row.getValue("applicationDate");
         const utcDate = new Date(dateValue as string);
-        const zonedDate = utcToZonedTime(utcDate, 'UTC');
+        const zonedDate = toZonedTime(utcDate, 'UTC');
         return (
           <div>
             {format(zonedDate, "PPP")}

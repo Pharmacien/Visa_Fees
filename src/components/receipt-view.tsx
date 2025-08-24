@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
-import { utcToZonedTime } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 
 
 export function ReceiptView({ application }: { application: Application }) {
@@ -41,7 +41,7 @@ export function ReceiptView({ application }: { application: Application }) {
     });
   };
   
-  const zonedApplicationDate = utcToZonedTime(new Date(application.applicationDate), 'UTC');
+  const zonedApplicationDate = toZonedTime(new Date(application.applicationDate), 'UTC');
 
   return (
     <div className="bg-muted min-h-screen p-4 sm:p-8 flex flex-col items-center">
