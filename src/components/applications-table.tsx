@@ -61,6 +61,8 @@ import { deleteApplication } from "@/app/actions";
 import { ApplicationForm } from "./application-form";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { ChevronDown, ChevronsUpDown, MoreHorizontal } from "lucide-react";
+import { utcToZonedTime } from "date-fns-tz";
+
 
 export function ApplicationsTable({ data }: { data: Application[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -137,11 +139,16 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
           <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
-      cell: ({ row }) => (
-        <div>
-          {format(new Date(row.getValue("applicationDate")), "PPP")}
-        </div>
-      ),
+      cell: ({ row }) => {
+        const dateValue = row.getValue("applicationDate");
+        const utcDate = new Date(dateValue as string);
+        const zonedDate = utcToZonedTime(utcDate, 'UTC');
+        return (
+          <div>
+            {format(zonedDate, "PPP")}
+          </div>
+        );
+      }
     },
     {
       accessorKey: "amountPaid",
@@ -355,5 +362,3 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
     </Card>
   );
 }
-
-    
