@@ -71,11 +71,9 @@ export function ReceiptView({ application }: { application: Application }) {
       pdf.save(`visa-receipt-${application.passportNumber}.pdf`);
     });
   };
-  
-  const zonedApplicationDate = toZonedTime(new Date(application.applicationDate), 'UTC');
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4 sm:p-8 flex flex-col items-center font-serif">
+    <div className="bg-gray-100 min-h-screen p-4 sm:p-8 flex flex-col items-center">
       <div className="w-full max-w-4xl">
         <Card className="mb-8 no-print shadow-lg">
             <CardHeader>
@@ -100,50 +98,76 @@ export function ReceiptView({ application }: { application: Application }) {
             </CardContent>
         </Card>
         
-        <div ref={receiptRef} className="bg-white p-12 shadow-lg rounded-sm text-black A4-format">
+        <div ref={receiptRef} className="bg-white p-12 shadow-lg rounded-sm text-black A4-format font-sans">
           {/* Header */}
-          <header className="flex justify-between items-start mb-8">
-            <div className="flex items-center gap-4">
-              <Image 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Seal_of_Algeria.svg/200px-Seal_of_Algeria.svg.png"
-                alt="Seal of Algeria"
-                width={80}
-                height={80}
-                data-ai-hint="algeria seal"
-              />
-              <div className="text-center">
-                <p className="font-bold">République Algérienne Démocratique et Populaire</p>
-                <p>Ambassade d'Algérie à Ljubljana</p>
-              </div>
+          <header className="text-center mb-8 relative">
+            <div className="absolute top-0 right-0 text-left">
+                <h2 className="font-bold">Receipt</h2>
+                <p className="mt-1">No. <span className="font-normal underline">{receiptNumber}</span></p>
+                <p className="mt-1">Date: <span className="font-normal underline">{generatedDate ? format(generatedDate, 'dd.MM.yyyy') : '__________'}</span></p>
             </div>
-            <div className="text-right">
-                <h2 className="text-xl font-bold">Reçu de Paiement</h2>
-                <p className="mt-1">No. <span className="font-sans font-normal underline">{receiptNumber}</span></p>
-                <p className="mt-1">Date: <span className="font-sans font-normal underline">{generatedDate ? format(generatedDate, 'dd.MM.yyyy') : '__________'}</span></p>
+             <div className="flex justify-center mb-2">
+                 <Image 
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Seal_of_Algeria.svg/200px-Seal_of_Algeria.svg.png"
+                    alt="Seal of Algeria"
+                    width={80}
+                    height={80}
+                    data-ai-hint="algeria seal"
+                />
             </div>
+            <p className="font-semibold">People's Democratic Republic of Algeria</p>
           </header>
 
           {/* Title */}
-          <section className="text-center my-12">
-            <h1 className="text-2xl font-bold underline tracking-wider">QUITTANCE DE RECETTES</h1>
+          <section className="text-center my-10">
+            <h1 className="text-2xl font-bold underline tracking-wider">Payment Receipt</h1>
           </section>
 
           {/* Info Boxes */}
-          <section className="my-8 text-base leading-relaxed">
-             <p>
-                L'Ambassade d'Algérie à Ljubljana atteste avoir reçu de <span className="font-bold">{application.fullName}</span>, la somme de <span className="font-bold">{application.amountPaid.toFixed(2)} EUR</span>, représentant les droits de chancellerie afférents au dépôt d'une demande de visa.
-             </p>
+          <section className="grid grid-cols-2 gap-4 my-8 text-sm">
+            <div className="border p-4">
+                <p className="text-xs mb-4">Received from:</p>
+                <p className="mt-2"><strong>Name and Surname:</strong> {application.fullName}</p>
+                <p className="mt-2"><strong>Document No.</strong> {application.passportNumber}</p>
+                <p className="mt-2"><strong>Address:</strong> {application.address}</p>
+            </div>
+            <div className="border p-4">
+                <p className="text-xs mb-4">Issued by:</p>
+                <p className="mt-2"><strong>Embassy of Algeria in Slovenia</strong></p>
+                <p className="mt-2">Opekarska cesta 35, 1000 Ljubljana</p>
+                <p className="mt-2">Tel: 083 83 1700</p>
+            </div>
           </section>
+
+          {/* Fees Table */}
+          <section className="my-8">
+            <table className="w-full border-collapse border text-sm">
+                <thead>
+                    <tr className="border-b">
+                        <th className="p-2 text-left font-bold border-r">Description</th>
+                        <th className="p-2 text-left font-bold">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td className="p-2 border-r h-16">Visa Application Fee</td>
+                        <td className="p-2">{new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(application.amountPaid)}</td>
+                    </tr>
+                     <tr>
+                        <td className="p-2 border-r h-16"></td>
+                        <td className="p-2"></td>
+                    </tr>
+                </tbody>
+            </table>
+          </section>
+          
           
           {/* Footer */}
           <footer className="mt-24">
-            <div className="flex justify-between items-end">
-                <div>
-                    <p>Fait à Ljubljana, le <span className="underline">{generatedDate ? format(generatedDate, 'dd.MM.yyyy') : '________________'}</span></p>
-                </div>
-                <div className="text-center">
-                    <p>Le Chef de Poste,</p>
-                    <p className="mt-16">Signature et Cachet</p>
+            <div className="flex justify-end">
+                <div className="text-left">
+                    <p>Stamp and Signature:</p>
+                    <p className="mt-16">________________________________</p>
                 </div>
             </div>
           </footer>
