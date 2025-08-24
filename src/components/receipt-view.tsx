@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Application } from "@/lib/schema";
 import { Button } from "./ui/button";
 import { Download, FileText, Printer } from "lucide-react";
@@ -11,6 +11,12 @@ import jsPDF from "jspdf";
 
 export function ReceiptView({ application }: { application: Application }) {
   const receiptRef = useRef<HTMLDivElement>(null);
+  const [generatedDate, setGeneratedDate] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setGeneratedDate(new Date());
+  }, []);
+
 
   const handlePrint = () => {
     window.print();
@@ -112,7 +118,7 @@ export function ReceiptView({ application }: { application: Application }) {
           <footer className="mt-12 pt-8 border-t text-center text-muted-foreground text-sm">
             <p className="font-bold font-headline text-primary">VisaForm.AI</p>
             <p>This is an automatically generated receipt. Please keep it for your records.</p>
-            <p>Generated on: {new Date().toLocaleString()}</p>
+            {generatedDate && <p>Generated on: {generatedDate.toLocaleString()}</p>}
           </footer>
         </div>
       </div>
