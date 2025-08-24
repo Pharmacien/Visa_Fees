@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
+import { Sidebar, SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { Header } from '@/components/header';
 
 export const metadata: Metadata = {
   title: 'VisaForm.AI',
@@ -20,8 +22,13 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"></link>
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"></link>
       </head>
-      <body className="font-body antialiased min-h-screen bg-background" suppressHydrationWarning>
-        {children}
+      <body className="font-body antialiased" suppressHydrationWarning>
+        <SidebarProvider>
+            <Header/>
+            <SidebarInset>
+              {children}
+            </SidebarInset>
+        </SidebarProvider>
         <Toaster />
       </body>
     </html>

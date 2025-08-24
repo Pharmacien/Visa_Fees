@@ -60,7 +60,7 @@ import { Application } from "@/lib/schema";
 import { deleteApplication } from "@/app/actions";
 import { ApplicationForm } from "./application-form";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import { ChevronDown, ChevronsUpDown, MoreHorizontal } from "lucide-react";
+import { ChevronDown, ChevronsUpDown, MoreHorizontal, FileText, Pencil, Trash2, Copy } from "lucide-react";
 import { toZonedTime } from "date-fns-tz";
 
 
@@ -195,19 +195,25 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
               <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(application.id!)}
               >
+                <Copy className="mr-2 h-4 w-4" />
                 Copy application ID
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <Link href={`/receipt/${application.id}`}>
-                <DropdownMenuItem>View Receipt</DropdownMenuItem>
+                 <DropdownMenuItem>
+                    <FileText className="mr-2 h-4 w-4" />
+                    View Receipt
+                </DropdownMenuItem>
               </Link>
               <DropdownMenuItem onClick={() => setItemToEdit(application)}>
+                <Pencil className="mr-2 h-4 w-4" />
                 Edit
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="text-red-600"
+                className="text-red-600 focus:text-red-600 focus:bg-red-50"
                 onClick={() => setItemToDelete(application)}
               >
+                <Trash2 className="mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -241,7 +247,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
         <CardHeader>
             <div className="flex items-center justify-between">
                 <div>
-                    <CardTitle className="font-headline text-2xl">Current Applications</CardTitle>
+                    <CardTitle className="font-headline text-2xl">Applications Report</CardTitle>
                     <CardDescription>
                         View, manage, and export all visa applications.
                     </CardDescription>
