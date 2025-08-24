@@ -95,44 +95,73 @@ export function ReceiptView({ application }: { application: Application }) {
         </Card>
         
         <div ref={receiptRef} className="bg-white p-12 shadow-lg rounded-sm text-black A4-format">
-          <header className="flex justify-between items-start pb-4 border-b-2 border-black">
+          {/* Header */}
+          <header className="flex justify-between items-start mb-8">
             <div className="flex items-center gap-4">
               <Image 
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Seal_of_Algeria.svg/2048px-Seal_of_Algeria.svg.png"
                 alt="Seal of Algeria"
-                width={80}
-                height={80}
+                width={60}
+                height={60}
                 data-ai-hint="algeria seal"
               />
-               <div className="text-center">
-                  <p className="font-bold">PEOPLE'S DEMOCRATIC REPUBLIC OF ALGERIA</p>
-                  <p>EMBASSY OF ALGERIA IN SLOVENIA</p>
-                </div>
+              <p className="font-bold">People's Democratic Republic of Algeria</p>
             </div>
-            <div className="text-right">
-                <h2 className="text-xl font-bold">Receipt Number: <span className="font-sans">{receiptNumber}</span></h2>
-                <p className="mt-1">Date: <span className="font-sans">{generatedDate ? format(generatedDate, 'dd.MM.yyyy') : '__________'}</span></p>
+            <div className="text-left">
+                <h2 className="text-xl font-bold">Receipt</h2>
+                <p className="mt-1">No. <span className="font-sans font-normal underline">{receiptNumber}</span></p>
+                <p className="mt-1">Date: <span className="font-sans font-normal underline">{generatedDate ? format(generatedDate, 'dd.MM.yyyy') : '__________'}</span></p>
             </div>
           </header>
 
+          {/* Title */}
           <section className="text-center my-8">
-            <h1 className="text-2xl font-bold underline tracking-wide">PAYMENT RECEIPT</h1>
-          </section>
-          
-          <section className="my-8 text-lg">
-             <p className="leading-relaxed">
-                The Embassy of Algeria in Slovenia states that we have received{' '}
-                <span className="font-bold font-sans">${application.amountPaid}</span> from{' '}
-                <span className="font-bold">{application.fullName}</span> on{' '}
-                <span className="font-bold font-sans">{format(zonedApplicationDate, "dd.MM.yyyy")}</span>,
-                corresponding to the chancery rights of the Visa Application Fees.
-            </p>
+            <h1 className="text-xl font-bold underline tracking-wide">Payment Receipt</h1>
           </section>
 
+          {/* Info Boxes */}
+          <section className="grid grid-cols-2 gap-4 my-8 text-sm">
+            <div className="border p-4">
+              <p className="font-bold mb-2">Received from:</p>
+              <p>Name and Surname: <span className="font-semibold">{application.fullName}</span></p>
+              <p>Document No.: <span className="font-sans font-semibold">{application.passportNumber}</span></p>
+              <p>Address: _________________________</p>
+            </div>
+            <div className="border p-4">
+              <p className="font-bold mb-2">Issued by:</p>
+              <p className="font-semibold">Embassy of Algeria in Slovenia</p>
+              <p>Opekarska cesta 35, 1000 Ljubljana</p>
+              <p>Tel: 083 83 1700</p>
+            </div>
+          </section>
+          
+          {/* Details Table */}
+          <section className="my-8">
+            <table className="w-full border-collapse border border-black">
+              <thead>
+                <tr>
+                  <th className="border border-black p-2 text-left font-bold">Description</th>
+                  <th className="border border-black p-2 text-left font-bold w-48">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-black p-2">Visa Application Fee</td>
+                  <td className="border border-black p-2 font-sans font-bold text-center">${application.amountPaid.toFixed(2)}</td>
+                </tr>
+                 <tr>
+                  <td className="border border-black p-2 h-12"></td>
+                  <td className="border border-black p-2 h-12"></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+
+          {/* Footer */}
           <footer className="mt-24">
-            <div className="flex justify-between">
-                <p>Place and date: ___________________________</p>
-                <p>Signature: ________________________________</p>
+            <div className="flex justify-end">
+                <p>Stamp and Signature: ________________________________</p>
             </div>
           </footer>
         </div>
