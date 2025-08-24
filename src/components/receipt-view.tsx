@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Link from "next/link";
 import { Application } from "@/lib/schema";
 import { Button } from "./ui/button";
-import { Download, FileText, Printer } from "lucide-react";
+import { ArrowLeft, Download, FileText, Printer } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "./ui/card";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -32,11 +33,29 @@ export function ReceiptView({ application }: { application: Application }) {
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "pt",
-        format: [canvas.width, canvas.height]
+        format: "a4"
       });
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      const canvasAspectRatio = canvasWidth / canvasHeight;
+      const pdfAspectRatio = pdfWidth / pdfHeight;
+      
+      let finalWidth, finalHeight;
+
+      if (canvasAspectRatio > pdfAspectRatio) {
+        finalWidth = pdfWidth;
+        finalHeight = pdfWidth / canvasAspectRatio;
+      } else {
+        finalHeight = pdfHeight;
+        finalWidth = pdfHeight * canvasAspectRatio;
+      }
+      
+      const x = (pdfWidth - finalWidth) / 2;
+      const y = (pdfHeight - finalHeight) / 2;
+      
+      pdf.addImage(imgData, "PNG", x, y, finalWidth, finalHeight);
       pdf.save(`visa-receipt-${application.passportNumber}.pdf`);
     });
   };
@@ -52,6 +71,12 @@ export function ReceiptView({ application }: { application: Application }) {
                 <CardDescription>Actions for receipt of {application.fullName}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-4">
+                <Button asChild variant="outline">
+                    <Link href="/">
+                        <ArrowLeft className="mr-2 h-4 w-4" />
+                        Back to Dashboard
+                    </Link>
+                </Button>
                 <Button onClick={handlePrint}>
                     <Printer className="mr-2 h-4 w-4" />
                     Print
