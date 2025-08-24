@@ -83,48 +83,92 @@ export function ReceiptView({ application }: { application: Application }) {
           </Card>
           
           <div ref={receiptRef} className="bg-white p-[1in] shadow-lg rounded-sm text-black A4-format font-sans print:shadow-none print:rounded-none">
+            {/* Header */}
+            <header className="flex justify-between items-start mb-10">
+              <div className="text-sm">
+                <h2 className="font-bold text-lg mb-2">Embassy of Algeria in Slovenia</h2>
+                <p>Opekarska cesta 35</p>
+                <p>1000 Ljubljana</p>
+                <p>Tel: 083 83 1700</p>
+              </div>
+              <div className="relative w-24 h-24">
+                <Image
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Emblem_of_Algeria.svg/2048px-Emblem_of_Algeria.svg.png"
+                  alt="Seal of Algeria"
+                  layout="fill"
+                  objectFit="contain"
+                  data-ai-hint="algeria seal"
+                />
+              </div>
+            </header>
+            
             {/* Title */}
             <section className="text-center my-10">
-              <h1 className="text-2xl font-bold underline tracking-wider">Payment Receipt</h1>
+              <h1 className="text-2xl font-bold underline tracking-wider">PAYMENT RECEIPT</h1>
             </section>
 
-            {/* Info Boxes */}
-            <section className="grid grid-cols-2 gap-4 my-8 text-sm">
-              <div className="border p-4">
-                  <p className="text-xs mb-4">Received from:</p>
-                  <p className="mt-2"><strong>Name and Surname:</strong> {application.fullName}</p>
-                  <p className="mt-2"><strong>Document No.</strong> {application.passportNumber}</p>
-                  <p className="mt-2"><strong>Address:</strong> {application.address}</p>
+            {/* Meta Info */}
+            <section className="grid grid-cols-2 gap-x-8 text-sm mb-8">
+              <div>
+                <div className="grid grid-cols-2">
+                  <span className="font-bold">Receipt No:</span>
+                  <span>{receiptNumber}</span>
+                </div>
               </div>
-              <div className="border p-4">
-                  <p className="text-xs mb-4">Issued by:</p>
-                  <p className="mt-2"><strong>Embassy of Algeria in Slovenia</strong></p>
-                  <p className="mt-2">Opekarska cesta 35, 1000 Ljubljana</p>
-                  <p className="mt-2">Tel: 083 83 1700</p>
+              <div className="text-right">
+                <div className="grid grid-cols-2">
+                  <span className="font-bold">Date:</span>
+                  <span>{generatedDate ? format(generatedDate, 'dd.MM.yyyy') : '...'}</span>
+                </div>
               </div>
             </section>
 
+            {/* Main Content */}
+            <section className="border-t border-b border-black py-4 my-8">
+              <div className="grid grid-cols-[1fr_2fr] gap-x-4 text-sm leading-relaxed">
+                  <span className="font-bold">Received from:</span>
+                  <span>{application.fullName}</span>
+
+                  <span className="font-bold">Address:</span>
+                  <span>{application.address}</span>
+
+                  <span className="font-bold">Passport No:</span>
+                  <span>{application.passportNumber}</span>
+              </div>
+            </section>
+            
             {/* Fees Table */}
             <section className="my-8">
-              <table className="w-full border-collapse border text-sm">
+              <table className="w-full border-collapse border border-black text-sm">
                   <thead>
-                      <tr className="border-b">
-                          <th className="p-2 text-left font-bold border-r">Description</th>
-                          <th className="p-2 text-left font-bold">Amount</th>
+                      <tr className="border-b border-black">
+                          <th className="p-2 text-left font-bold border-r border-black">Description</th>
+                          <th className="p-2 text-right font-bold">Amount</th>
                       </tr>
                   </thead>
                   <tbody>
                       <tr>
-                          <td className="p-2 border-r h-16">Visa Application Fee</td>
-                          <td className="p-2">{new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(application.amountPaid)}</td>
-                      </tr>
-                       <tr>
-                          <td className="p-2 border-r h-16"></td>
-                          <td className="p-2"></td>
+                          <td className="p-2 border-r border-black">Visa Application Fee</td>
+                          <td className="p-2 text-right">{new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(application.amountPaid)}</td>
                       </tr>
                   </tbody>
+                  <tfoot>
+                      <tr className="border-t-2 border-black font-bold">
+                          <td className="p-2 text-right border-r border-black">Total</td>
+                          <td className="p-2 text-right">{new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(application.amountPaid)}</td>
+                      </tr>
+                  </tfoot>
               </table>
             </section>
+
+            {/* Footer */}
+            <footer className="mt-20 text-center text-xs">
+              <div className="w-48 mx-auto">
+                <div className="border-t border-black pt-2">
+                  <p>Signature</p>
+                </div>
+              </div>
+            </footer>
           </div>
         </div>
       </div>
