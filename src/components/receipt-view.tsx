@@ -5,7 +5,6 @@ import { Application } from "@/lib/schema";
 import { Button } from "./ui/button";
 import { Download, FileText, Printer } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "./ui/card";
-import { Separator } from "./ui/separator";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
@@ -63,58 +62,36 @@ export function ReceiptView({ application }: { application: Application }) {
         <div ref={receiptRef} className="bg-white p-12 shadow-2xl rounded-lg">
           <header className="flex justify-between items-start pb-8 border-b-2 border-primary">
             <div>
-              <h1 className="text-4xl font-bold text-primary font-headline">Visa Application Receipt</h1>
-              <p className="text-muted-foreground mt-1">OFFICIAL DOCUMENT</p>
+              <h1 className="text-4xl font-bold text-primary font-headline">Visa Application Fees Receipt</h1>
+              <p className="text-muted-foreground mt-1">The Embassy of Algeria in Slovenia</p>
             </div>
             <div className="text-primary">
                 <FileText size={48} />
             </div>
           </header>
 
-          <section className="my-8">
-            <h2 className="text-xl font-semibold text-primary/80 font-headline mb-4">Applicant Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-lg">
-                <div>
-                    <p className="text-sm text-muted-foreground">Full Name</p>
-                    <p className="font-semibold">{application.fullName}</p>
-                </div>
-                 <div>
-                    <p className="text-sm text-muted-foreground">Passport Number</p>
-                    <p className="font-semibold font-code tracking-wider">{application.passportNumber}</p>
-                </div>
-            </div>
-          </section>
-
-          <Separator className="my-8" />
-          
-          <section>
-            <h2 className="text-xl font-semibold text-primary/80 font-headline mb-4">Application Information</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-lg">
-                <div>
-                    <p className="text-sm text-muted-foreground">Application Date</p>
-                    <p className="font-semibold">{format(new Date(application.applicationDate), "PPP")}</p>
-                </div>
-                 <div>
-                    <p className="text-sm text-muted-foreground">Application ID</p>
-                    <p className="font-semibold font-code tracking-wider">{application.id}</p>
-                </div>
-            </div>
-          </section>
-
-          <Separator className="my-8" />
-          
-          <section className="mt-8 bg-secondary/50 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-primary/80 font-headline mb-4">Payment Summary</h2>
-            <div className="flex justify-between items-center text-xl">
-              <span className="text-muted-foreground">Total Fees Paid</span>
-              <span className="font-bold text-primary text-2xl font-code">
+          <section className="my-12 text-lg leading-relaxed">
+            <p>
+              The Embassy of Algeria in Slovenia states that we have received {' '}
+              <span className="font-semibold">
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
                 }).format(application.amountPaid)}
-              </span>
-            </div>
+              </span> from <span className="font-semibold">{application.fullName}</span> on {' '}
+              <span className="font-semibold">{format(new Date(application.applicationDate), "PPP")}</span>,
+              corresponding to the chancery rights of the Visa Application Fees.
+            </p>
           </section>
+
+          <div className="mt-24 space-y-12">
+              <div>
+                  <p>Place and date: ___________________________</p>
+              </div>
+              <div>
+                  <p>Signature: ________________________________</p>
+              </div>
+          </div>
 
           <footer className="mt-12 pt-8 border-t text-center text-muted-foreground text-sm">
             <p className="font-bold font-headline text-primary">VisaForm.AI</p>
@@ -126,5 +103,3 @@ export function ReceiptView({ application }: { application: Application }) {
     </div>
   );
 }
-
-    
