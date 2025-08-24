@@ -105,7 +105,7 @@ export function ReceiptView({ application }: { application: Application }) {
           <header className="flex justify-between items-start mb-8">
             <div className="flex items-center gap-4">
               <Image 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Seal_of_Algeria.svg/2048px-Seal_of_Algeria.svg.png"
+                src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Seal_of_Algeria.svg"
                 alt="Seal of Algeria"
                 width={60}
                 height={60}
