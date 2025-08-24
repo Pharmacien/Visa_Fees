@@ -12,6 +12,10 @@ import jsPDF from "jspdf";
 import { format } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 
+// This is a simple in-memory counter for the session.
+// It will reset on page refresh. For a persistent, global counter,
+// a database or server-side state management would be needed.
+let receiptCounter = 0;
 
 export function ReceiptView({ application }: { application: Application }) {
   const receiptRef = useRef<HTMLDivElement>(null);
@@ -21,9 +25,11 @@ export function ReceiptView({ application }: { application: Application }) {
   useEffect(() => {
     const now = new Date();
     setGeneratedDate(now);
-    // Generate a random 4-digit number for the receipt
-    const randomNumber = Math.floor(1000 + Math.random() * 9000);
-    setReceiptNumber(`VISA${randomNumber}/${now.getFullYear()}`);
+    
+    // Increment the counter for each new receipt generated in the session
+    receiptCounter += 1;
+    const formattedCounter = String(receiptCounter).padStart(2, '0');
+    setReceiptNumber(`VISA${formattedCounter}/${now.getFullYear()}`);
   }, []);
 
 
