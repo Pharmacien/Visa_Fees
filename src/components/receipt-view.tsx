@@ -108,7 +108,7 @@ export function ReceiptView({ application }: { application: Application }) {
             </div>
              <div className="flex justify-center mb-2">
                  <Image 
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Seal_of_Algeria.svg/200px-Seal_of_Algeria.svg.png"
+                    src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Seal_of_Algeria.svg"
                     alt="Seal of Algeria"
                     width={80}
                     height={80}

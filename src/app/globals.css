@@ -65,5 +65,16 @@
   body {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+  }
+  .A4-format {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 1in;
+    box-shadow: none !important;
+    border: none !important;
   }
 }
