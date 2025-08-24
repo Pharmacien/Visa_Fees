@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Separator } from "./ui/separator";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { format } from "date-fns";
 
 export function ReceiptView({ application }: { application: Application }) {
   const receiptRef = useRef<HTMLDivElement>(null);
@@ -91,7 +92,7 @@ export function ReceiptView({ application }: { application: Application }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-lg">
                 <div>
                     <p className="text-sm text-muted-foreground">Application Date</p>
-                    <p className="font-semibold">{new Date(application.applicationDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p className="font-semibold">{format(new Date(application.applicationDate), "PPP")}</p>
                 </div>
                  <div>
                     <p className="text-sm text-muted-foreground">Application ID</p>
@@ -125,3 +126,5 @@ export function ReceiptView({ application }: { application: Application }) {
     </div>
   );
 }
+
+    

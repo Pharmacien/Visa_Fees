@@ -20,6 +20,7 @@ import {
 } from "@tanstack/react-table";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
+import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -95,7 +96,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
   const downloadAsCSV = () => {
     const csvContent = "data:text/csv;charset=utf-8," 
       + ["Full Name", "Passport Number", "Application Date", "Amount Paid"].join(",") + "\n"
-      + data.map(e => [e.fullName, e.passportNumber, e.applicationDate.toLocaleDateString(), e.amountPaid].join(",")).join("\n");
+      + data.map(e => [e.fullName, e.passportNumber, format(new Date(e.applicationDate), "yyyy-MM-dd"), e.amountPaid].join(",")).join("\n");
     
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -138,7 +139,7 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
       ),
       cell: ({ row }) => (
         <div>
-          {new Date(row.getValue("applicationDate")).toLocaleDateString()}
+          {format(new Date(row.getValue("applicationDate")), "PPP")}
         </div>
       ),
     },
@@ -354,3 +355,5 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
     </Card>
   );
 }
+
+    
