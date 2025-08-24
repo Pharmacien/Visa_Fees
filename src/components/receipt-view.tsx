@@ -16,9 +16,14 @@ import { toZonedTime } from "date-fns-tz";
 export function ReceiptView({ application }: { application: Application }) {
   const receiptRef = useRef<HTMLDivElement>(null);
   const [generatedDate, setGeneratedDate] = useState<Date | null>(null);
+  const [receiptNumber, setReceiptNumber] = useState<string>('');
 
   useEffect(() => {
-    setGeneratedDate(new Date());
+    const now = new Date();
+    setGeneratedDate(now);
+    // Generate a random 4-digit number for the receipt
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+    setReceiptNumber(`VISA${randomNumber}/${now.getFullYear()}`);
   }, []);
 
 
@@ -89,8 +94,8 @@ export function ReceiptView({ application }: { application: Application }) {
             </CardContent>
         </Card>
         
-        <div ref={receiptRef} className="bg-white p-12 shadow-lg rounded-sm text-black">
-          <header className="flex justify-between items-start pb-4">
+        <div ref={receiptRef} className="bg-white p-12 shadow-lg rounded-sm text-black A4-format">
+          <header className="flex justify-between items-start pb-4 border-b-2 border-black">
             <div className="flex items-center gap-4">
               <Image 
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Seal_of_Algeria.svg/2048px-Seal_of_Algeria.svg.png"
@@ -99,65 +104,36 @@ export function ReceiptView({ application }: { application: Application }) {
                 height={80}
                 data-ai-hint="algeria seal"
               />
-              <span className="text-lg font-semibold">People's Democratic Republic of Algeria</span>
+               <div className="text-center">
+                  <p className="font-bold">PEOPLE'S DEMOCRATIC REPUBLIC OF ALGERIA</p>
+                  <p>EMBASSY OF ALGERIA IN SLOVENIA</p>
+                </div>
             </div>
             <div className="text-right">
-                <h2 className="text-2xl font-bold">Receipt</h2>
-                <p className="mt-2">No. __________</p>
-                <p className="mt-1">Date: <span className="font-sans">{generatedDate ? format(generatedDate, 'PP') : '__________'}</span></p>
+                <h2 className="text-xl font-bold">Receipt Number: <span className="font-sans">{receiptNumber}</span></h2>
+                <p className="mt-1">Date: <span className="font-sans">{generatedDate ? format(generatedDate, 'dd.MM.yyyy') : '__________'}</span></p>
             </div>
           </header>
 
           <section className="text-center my-8">
             <h1 className="text-2xl font-bold underline tracking-wide">PAYMENT RECEIPT</h1>
           </section>
-
-          <section className="grid grid-cols-2 gap-8 border border-black p-4">
-            <div>
-              <p className="font-bold">Received from:</p>
-              <p className="mt-4">Name and Surname: <span className="font-sans font-semibold">{application.fullName}</span></p>
-              <p className="mt-2">Document No.: <span className="font-sans font-semibold">{application.passportNumber}</span></p>
-              <p className="mt-2">Address: _________________________</p>
-            </div>
-            <div>
-              <p className="font-bold">Issued by:</p>
-              <div className="mt-4 font-sans">
-                  <p>Embassy of Algeria in Slovenia</p>
-                  <p>Opekarska cesta 35, 1000 Ljubljana</p>
-                  <p>Tel: 083 83 1700</p>
-              </div>
-            </div>
-          </section>
           
-          <section className="mt-4">
-            <table className="w-full border-collapse border border-black">
-                <thead>
-                    <tr className="border-b border-black">
-                        <th className="p-2 text-left font-bold border-r border-black">Description</th>
-                        <th className="p-2 text-left font-bold">Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td className="p-2 border-r border-black font-sans">Visa Application Fee</td>
-                        <td className="p-2 font-sans font-semibold">
-                            {new Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                                }).format(application.amountPaid)
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="p-2 border-r border-black h-16"></td>
-                        <td className="p-2"></td>
-                    </tr>
-                </tbody>
-            </table>
+          <section className="my-8 text-lg">
+             <p className="leading-relaxed">
+                The Embassy of Algeria in Slovenia states that we have received{' '}
+                <span className="font-bold font-sans">${application.amountPaid}</span> from{' '}
+                <span className="font-bold">{application.fullName}</span> on{' '}
+                <span className="font-bold font-sans">{format(zonedApplicationDate, "dd.MM.yyyy")}</span>,
+                corresponding to the chancery rights of the Visa Application Fees.
+            </p>
           </section>
 
-          <footer className="mt-24 text-right">
-            <p>Stamp and Signature: ____________________</p>
+          <footer className="mt-24">
+            <div className="flex justify-between">
+                <p>Place and date: ___________________________</p>
+                <p>Signature: ________________________________</p>
+            </div>
           </footer>
         </div>
       </div>
