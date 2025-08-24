@@ -20,8 +20,14 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
   return <ReceiptView application={application} />;
 }
 
-export function generateMetadata({ params }: ReceiptPageProps) {
+export async function generateMetadata({ params }: ReceiptPageProps) {
+    const application = await getApplicationById(params.id);
+    if (!application) {
+        return {
+            title: `Receipt Not Found`
+        }
+    }
     return {
-        title: `Receipt for Application ${params.id}`
+        title: `Receipt for ${application.fullName}`
     }
 }
