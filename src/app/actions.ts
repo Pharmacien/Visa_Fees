@@ -9,9 +9,9 @@ import { toZonedTime } from "date-fns-tz";
 
 // In-memory store for demonstration purposes
 let applications: Application[] = [
-  { id: "app-01", fullName: "John Doe", passportNumber: "A12345678", applicationDate: new Date("2024-05-15"), amountPaid: 250 },
-  { id: "app-02", fullName: "Jane Smith", passportNumber: "B87654321", applicationDate: new Date("2024-06-01"), amountPaid: 180.50 },
-  { id: "app-03", fullName: "Peter Jones", passportNumber: "C54738291", applicationDate: new Date("2024-06-20"), amountPaid: 320.75 },
+  { id: "app-01", fullName: "John Doe", passportNumber: "A12345678", address: "123 Main St, Anytown, USA", applicationDate: new Date("2024-05-15"), amountPaid: 250 },
+  { id: "app-02", fullName: "Jane Smith", passportNumber: "B87654321", address: "456 Oak Ave, Othertown, USA", applicationDate: new Date("2024-06-01"), amountPaid: 180.50 },
+  { id: "app-03", fullName: "Peter Jones", passportNumber: "C54738291", address: "789 Pine Ln, Sometown, USA", applicationDate: new Date("2024-06-20"), amountPaid: 320.75 },
 ];
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

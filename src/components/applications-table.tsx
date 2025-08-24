@@ -129,6 +129,11 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
       cell: ({ row }) => <div>{row.getValue("passportNumber")}</div>,
     },
     {
+      accessorKey: "address",
+      header: "Address",
+      cell: ({ row }) => <div>{row.getValue("address")}</div>,
+    },
+    {
       accessorKey: "applicationDate",
       header: ({ column }) => (
         <Button
@@ -165,9 +170,9 @@ export function ApplicationsTable({ data }: { data: Application[] }) {
       ),
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue("amountPaid"));
-        const formatted = new Intl.NumberFormat("en-US", {
+        const formatted = new Intl.NumberFormat("de-DE", {
           style: "currency",
-          currency: "USD",
+          currency: "EUR",
         }).format(amount);
         return <div className="text-right font-medium">{formatted}</div>;
       },

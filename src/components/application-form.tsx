@@ -28,6 +28,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { createApplication, updateApplication } from "@/app/actions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Textarea } from "./ui/textarea";
 
 type ApplicationFormProps = {
   application?: Application;
@@ -48,6 +49,7 @@ export function ApplicationForm({ application, onSuccess }: ApplicationFormProps
       : {
           fullName: "",
           passportNumber: "",
+          address: "",
           applicationDate: undefined,
           amountPaid: 0,
         },
@@ -130,12 +132,25 @@ export function ApplicationForm({ application, onSuccess }: ApplicationFormProps
                 </FormItem>
               )}
             />
+             <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="123 Main St, Anytown, USA" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="amountPaid"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Fees Paid ($)</FormLabel>
+                  <FormLabel>Fees Paid (€)</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="250.00" {...field} />
                   </FormControl>

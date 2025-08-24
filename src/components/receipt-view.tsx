@@ -131,7 +131,7 @@ export function ReceiptView({ application }: { application: Application }) {
               <p className="font-bold mb-2">Received from:</p>
               <p>Name and Surname: <span className="font-semibold">{application.fullName}</span></p>
               <p>Document No.: <span className="font-sans font-semibold">{application.passportNumber}</span></p>
-              <p>Address: _________________________</p>
+              <p>Address: <span className="font-semibold">{application.address}</span></p>
             </div>
             <div className="border p-4">
               <p className="font-bold mb-2">Issued by:</p>
@@ -153,7 +153,7 @@ export function ReceiptView({ application }: { application: Application }) {
               <tbody>
                 <tr>
                   <td className="border border-black p-2">Visa Application Fee</td>
-                  <td className="border border-black p-2 font-sans font-bold text-center">${application.amountPaid.toFixed(2)}</td>
+                  <td className="border border-black p-2 font-sans font-bold text-center">€{application.amountPaid.toFixed(2)}</td>
                 </tr>
                  <tr>
                   <td className="border border-black p-2 h-12"></td>
