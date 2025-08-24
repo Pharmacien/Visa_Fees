@@ -2,10 +2,11 @@
 
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Application } from "@/lib/schema";
 import { Button } from "./ui/button";
-import { ArrowLeft, Download, FileText, Printer } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "./ui/card";
+import { ArrowLeft, Download, Printer } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
@@ -63,7 +64,7 @@ export function ReceiptView({ application }: { application: Application }) {
   const zonedApplicationDate = toZonedTime(new Date(application.applicationDate), 'UTC');
 
   return (
-    <div className="bg-muted min-h-screen p-4 sm:p-8 flex flex-col items-center">
+    <div className="bg-gray-100 min-h-screen p-4 sm:p-8 flex flex-col items-center font-serif">
       <div className="w-full max-w-4xl">
         <Card className="mb-8 no-print shadow-lg">
             <CardHeader>
@@ -88,44 +89,75 @@ export function ReceiptView({ application }: { application: Application }) {
             </CardContent>
         </Card>
         
-        <div ref={receiptRef} className="bg-white p-12 shadow-2xl rounded-lg">
-          <header className="flex justify-between items-start pb-8 border-b-2 border-primary">
-            <div>
-              <h1 className="text-4xl font-bold text-primary font-headline">Visa Application Fees Receipt</h1>
-              <p className="text-muted-foreground mt-1">The Embassy of Algeria in Slovenia</p>
+        <div ref={receiptRef} className="bg-white p-12 shadow-lg rounded-sm text-black">
+          <header className="flex justify-between items-start pb-4">
+            <div className="flex items-center gap-4">
+              <Image 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Seal_of_Algeria.svg/2048px-Seal_of_Algeria.svg.png"
+                alt="Seal of Algeria"
+                width={80}
+                height={80}
+                data-ai-hint="algeria seal"
+              />
+              <span className="text-lg font-semibold">People's Democratic Republic of Algeria</span>
             </div>
-            <div className="text-primary">
-                <FileText size={48} />
+            <div className="text-right">
+                <h2 className="text-2xl font-bold">Receipt</h2>
+                <p className="mt-2">No. __________</p>
+                <p className="mt-1">Date: <span className="font-sans">{generatedDate ? format(generatedDate, 'PP') : '__________'}</span></p>
             </div>
           </header>
 
-          <section className="my-12 text-lg leading-relaxed">
-            <p>
-              The Embassy of Algeria in Slovenia states that we have received {' '}
-              <span className="font-semibold">
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                }).format(application.amountPaid)}
-              </span> from <span className="font-semibold">{application.fullName}</span> on {' '}
-              <span className="font-semibold">{format(zonedApplicationDate, "PPP")}</span>,
-              corresponding to the chancery rights of the Visa Application Fees.
-            </p>
+          <section className="text-center my-8">
+            <h1 className="text-2xl font-bold underline tracking-wide">PAYMENT RECEIPT</h1>
           </section>
 
-          <div className="mt-24 space-y-12">
-              <div>
-                  <p>Place and date: ___________________________</p>
+          <section className="grid grid-cols-2 gap-8 border border-black p-4">
+            <div>
+              <p className="font-bold">Received from:</p>
+              <p className="mt-4">Name and Surname: <span className="font-sans font-semibold">{application.fullName}</span></p>
+              <p className="mt-2">Document No.: <span className="font-sans font-semibold">{application.passportNumber}</span></p>
+              <p className="mt-2">Address: _________________________</p>
+            </div>
+            <div>
+              <p className="font-bold">Issued by:</p>
+              <div className="mt-4 font-sans">
+                  <p>Embassy of Algeria in Slovenia</p>
+                  <p>Opekarska cesta 35, 1000 Ljubljana</p>
+                  <p>Tel: 083 83 1700</p>
               </div>
-              <div>
-                  <p>Signature: ________________________________</p>
-              </div>
-          </div>
+            </div>
+          </section>
+          
+          <section className="mt-4">
+            <table className="w-full border-collapse border border-black">
+                <thead>
+                    <tr className="border-b border-black">
+                        <th className="p-2 text-left font-bold border-r border-black">Description</th>
+                        <th className="p-2 text-left font-bold">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td className="p-2 border-r border-black font-sans">Visa Application Fee</td>
+                        <td className="p-2 font-sans font-semibold">
+                            {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                }).format(application.amountPaid)
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="p-2 border-r border-black h-16"></td>
+                        <td className="p-2"></td>
+                    </tr>
+                </tbody>
+            </table>
+          </section>
 
-          <footer className="mt-12 pt-8 border-t text-center text-muted-foreground text-sm">
-            <p className="font-bold font-headline text-primary">VisaForm.AI</p>
-            <p>This is an automatically generated receipt. Please keep it for your records.</p>
-            {generatedDate && <p>Generated on: {generatedDate.toLocaleString()}</p>}
+          <footer className="mt-24 text-right">
+            <p>Stamp and Signature: ____________________</p>
           </footer>
         </div>
       </div>
